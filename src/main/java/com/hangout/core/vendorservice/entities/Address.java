@@ -9,9 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Entity
 @ToString
 public class Address {
@@ -33,15 +31,14 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public Point getGeolocation() {
-        return geolocation;
+    public GeoPoint getGeolocation() {
+        return new GeoPoint(this.geolocation.getX(), this.geolocation.getY());
     }
 
     public void setGeolocation(GeoPoint location) {
         GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
         Coordinate coordinate = new Coordinate(location.getLon(), location.getLat());
         this.geolocation = geometryFactory.createPoint(coordinate);
-        // this.geolocation.setSRID(4326);
     }
 
     public String getBuildingNameOrNumber() {
