@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hangout.core.vendorservice.dtos.AllPlatformVendors;
 import com.hangout.core.vendorservice.entities.PlatformVendorCommon;
 import com.hangout.core.vendorservice.services.PlatformServices;
 
@@ -25,7 +26,7 @@ public class vendorController {
     }
 
     @GetMapping
-    public List<PlatformVendorCommon> getAll() {
+    public List<AllPlatformVendors> getAll() {
         return pvServices.getAll();
     }
 }

@@ -1,4 +1,4 @@
-package com.hangout.core.vendorservice.repositories;
+package com.hangout.core.vendorservice.dtos;
 
 import java.util.UUID;
 
@@ -6,7 +6,7 @@ import org.locationtech.jts.geom.Point;
 
 import com.hangout.core.vendorservice.entities.Category;
 
-public interface PlatformVendorReflection {
+public interface PlatformVendorProjection {
     UUID getId();
 
     String getPlaceName();

@@ -5,13 +5,16 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
+import com.desoss.jackson.datatype.jts.JtsModule;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hangout.core.vendorservice.exceptions.GeoJsonParseException;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.ToString;
 
 @Entity
-@ToString
 public class Address {
     @Id
     @GeneratedValue
@@ -31,8 +34,13 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public GeoPoint getGeolocation() {
-        return new GeoPoint(this.geolocation.getX(), this.geolocation.getY());
+    // public GeoPoint getGeolocation() {
+    // return new GeoPoint(this.geolocation.getX(), this.geolocation.getY());
+    // }
+    public String getGeolocation() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JtsModule());
+        return mapper.writeValueAsString(this.geolocation);
     }
 
     public void setGeolocation(GeoPoint location) {
@@ -80,4 +88,16 @@ public class Address {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        try {
+            return "Address [addressId=" + addressId + ", geolocation=" + getGeolocation() + ", buildingNameOrNumber="
+                    + buildingNameOrNumber + ", streetName=" + streetName + ", town=" + town + ", state=" + state
+                    + ", country=" + country + "]";
+        } catch (JsonProcessingException e) {
+            throw new GeoJsonParseException("GeoLocation could not be parsed");
+        }
+    }
+
 }

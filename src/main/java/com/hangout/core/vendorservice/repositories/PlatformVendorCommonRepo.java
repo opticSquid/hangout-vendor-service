@@ -1,5 +1,6 @@
 package com.hangout.core.vendorservice.repositories;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.hangout.core.vendorservice.dtos.PlatformVendorProjection;
 import com.hangout.core.vendorservice.entities.PlatformVendorCommon;
 
 public interface PlatformVendorCommonRepo extends JpaRepository<PlatformVendorCommon, UUID> {
@@ -14,5 +16,5 @@ public interface PlatformVendorCommonRepo extends JpaRepository<PlatformVendorCo
             +
             "FROM PlatformVendorCommon p " +
             "JOIN p.address a")
-    Page<PlatformVendorReflection> findAllBroadly(Pageable pageable);
+    Page<PlatformVendorProjection> findAllBroadly(Pageable pageable);
 }
