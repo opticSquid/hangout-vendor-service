@@ -1,12 +1,9 @@
 package com.hangout.core.vendorservice.entities;
 
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.CoordinateSequence;
-import org.locationtech.jts.geom.CoordinateSequenceFactory;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
-import org.locationtech.jts.geom.impl.PackedCoordinateSequenceFactory;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,16 +38,10 @@ public class Address {
     }
 
     public void setGeolocation(GeoPoint location) {
-        log.debug("location: {}", location);
-        double coords[] = { location.getLon(), location.getLat() };
-        CoordinateSequenceFactory coordinateSequence = new PackedCoordinateSequenceFactory(
-                PackedCoordinateSequenceFactory.DOUBLE);
-        coor
-        // old
-        GeometryFactory geometryFactory = new GeometryFactory();
+        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
         Coordinate coordinate = new Coordinate(location.getLon(), location.getLat());
         this.geolocation = geometryFactory.createPoint(coordinate);
-        this.geolocation.setSRID(4326);
+        // this.geolocation.setSRID(4326);
     }
 
     public String getBuildingNameOrNumber() {
