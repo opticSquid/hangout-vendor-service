@@ -11,4 +11,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Hotel extends PlatformVendorCommon {
     private Boolean isVegFoodAvailable;
+
 }

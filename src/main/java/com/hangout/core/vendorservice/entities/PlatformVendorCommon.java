@@ -25,7 +25,7 @@ import lombok.Data;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
-public abstract class PlatformVendorCommon {
+public class PlatformVendorCommon {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

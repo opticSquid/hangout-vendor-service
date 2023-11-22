@@ -7,16 +7,23 @@ import com.hangout.core.vendorservice.entities.food.Hotel;
 import com.hangout.core.vendorservice.repositories.HotelRepo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PlatformServices {
     // private final PlatformVendorCommonRepo pvcRepo;
     private final HotelRepo hotelRepo;
 
     public String addVendor(PlatformVendorCommon vendor) {
         Hotel tobeSaved = (Hotel) vendor;
-        Hotel saved = hotelRepo.save(tobeSaved);
-        return saved.getId().toString();
+        log.debug("entity: {}", vendor.getAddress());
+        if (vendor instanceof Hotel) {
+            Hotel saved = hotelRepo.save(tobeSaved);
+            return saved.getId().toString();
+        } else {
+            return null;
+        }
     }
 }

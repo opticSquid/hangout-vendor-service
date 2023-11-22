@@ -1,6 +1,7 @@
 package com.hangout.core.vendorservice.controllers;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,8 @@ public class vendorController {
     private final PlatformServices pvServices;
 
     @PostMapping
-    public String addVendor(PlatformVendorCommon vendor) {
+    public String addVendor(@RequestBody PlatformVendorCommon vendor) {
         return pvServices.addVendor(vendor);
+        // return "hello";
     }
 }
