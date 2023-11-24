@@ -29,11 +29,11 @@ public class PlatformVendorCommon {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String placeName;
+    private String placename;
     private Category category;
-    private String subCategory;
+    private String subcategory;
     @JsonIgnore
-    private UUID ownerId;
+    private UUID ownerid;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "addressId", referencedColumnName = "addressId")
     private Address address;

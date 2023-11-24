@@ -2,22 +2,21 @@ package com.hangout.core.vendorservice.dtos;
 
 import java.util.UUID;
 
-import org.locationtech.jts.geom.Point;
-
-import com.hangout.core.vendorservice.entities.Category;
+import org.geolatte.geom.G2D;
+import org.geolatte.geom.Point;
 
 public interface PlatformVendorProjection {
     UUID getId();
 
-    String getPlaceName();
+    String getPlacename();
 
-    Category getCategory();
+    Integer getCategory();
 
-    String getSubCategory();
+    String getSubcategory();
 
-    Point getGeolocation();
+    Point<G2D> getGeolocation();
 
-    String getStreetName();
+    String getStreetname();
 
     String getTown();
 

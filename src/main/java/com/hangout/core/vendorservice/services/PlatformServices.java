@@ -1,22 +1,13 @@
 package com.hangout.core.vendorservice.services;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import org.locationtech.jts.geom.Point;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.desoss.jackson.datatype.jts.JtsModule;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hangout.core.vendorservice.dtos.AllPlatformVendors;
 import com.hangout.core.vendorservice.dtos.PlatformVendorProjection;
+import com.hangout.core.vendorservice.dtos.PlatformVendorReprs;
 import com.hangout.core.vendorservice.entities.PlatformVendorCommon;
 import com.hangout.core.vendorservice.entities.food.Hotel;
-import com.hangout.core.vendorservice.exceptions.GeoJsonParseException;
 import com.hangout.core.vendorservice.repositories.HotelRepo;
 import com.hangout.core.vendorservice.repositories.PlatformVendorCommonRepo;
 
@@ -44,29 +35,36 @@ public class PlatformServices {
     // public List<PlatformVendorCommon> getAll() {
     // return pvcRepo.findAll();
     // }
-    private String getGeolocation(Point location) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JtsModule());
-        return mapper.writeValueAsString(location);
-    }
+    // private String getGeolocation(Point location) throws JsonProcessingException
+    // {
+    // ObjectMapper mapper = new ObjectMapper();
+    // mapper.registerModule(new JtsModule());
+    // return mapper.writeValueAsString(location);
+    // }
 
-    public List<AllPlatformVendors> getAll() {
-        Pageable pageable = PageRequest.of(0, 20);
-        Page<PlatformVendorProjection> pageOfPlatformVendor = pvcRepo.findAllBroadly(pageable);
-        List<PlatformVendorProjection> queryResult = pageOfPlatformVendor.getContent();
-        List<AllPlatformVendors> result = new LinkedList<>();
-        log.debug("result: {}", queryResult.get(0));
-        queryResult.stream().forEach(qr -> {
-            try {
-                result
-                        .add(new AllPlatformVendors(qr.getId().toString(), qr.getPlaceName(), qr.getCategory(),
-                                qr.getSubCategory(), getGeolocation(qr.getGeolocation()), qr.getStreetName(),
-                                qr.getTown(),
-                                qr.getState(), qr.getCountry()));
-            } catch (JsonProcessingException e) {
-                throw new GeoJsonParseException("GeoJson could not be parsed");
-            }
-        });
-        return result;
+    // public List<AllPlatformVendors> getAllPaged() {
+    // Pageable pageable = PageRequest.of(0, 20);
+    // Page<PlatformVendorProjection> pageOfPlatformVendor =
+    // pvcRepo.findAllBroadly(pageable);
+    // List<PlatformVendorProjection> queryResult =
+    // pageOfPlatformVendor.getContent();
+    // List<AllPlatformVendors> result = new LinkedList<>();
+    // log.debug("result: {}", queryResult.get(0));
+    // queryResult.stream().forEach(qr -> {
+    // result
+    // .add(new AllPlatformVendors("", qr.getPlaceName(),
+    // Category.getByValue(qr.getCategory()),
+    // qr.getSubCategory(), qr.getGeolocation(), qr.getStreetName(),
+    // qr.getTown(),
+    // qr.getState(), qr.getCountry()));
+    // });
+    // return result;
+    // }
+
+    public List<PlatformVendorReprs> getAllNonPaged() {
+        List<PlatformVendorProjection> model = pvcRepo.findAllNonPaged();
+        return model.stream().map(m -> new PlatformVendorReprs(m.getId(), m.getPlacename(), m.getCategory(),
+                m.getSubcategory(), m.getGeolocation(), m.getStreetname(), m.getTown(), m.getState(), m.getCountry()))
+                .toList();
     }
 }
