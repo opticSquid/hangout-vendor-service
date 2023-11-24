@@ -1,5 +1,6 @@
 package com.hangout.core.vendorservice.repositories;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
