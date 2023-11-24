@@ -7,17 +7,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Address {
     @Id
     @GeneratedValue
     private Integer addressId;
-    private final Point<G2D> geolocation;
-    private final String buildingnameornumber;
-    private final String streetname;
-    private final String town;
-    private final String state;
-    private final String country;
+    private Point<G2D> geolocation;
+    private String buildingnameornumber;
+    private String streetname;
+    private String town;
+    private String state;
+    private String country;
 }
