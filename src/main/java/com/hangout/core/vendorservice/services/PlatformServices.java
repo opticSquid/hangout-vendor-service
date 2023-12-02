@@ -23,7 +23,6 @@ public class PlatformServices {
 
     public String addVendor(PlatformVendorCommon vendor) {
         Hotel tobeSaved = (Hotel) vendor;
-        log.debug("entity: {}", vendor.getAddress());
         if (vendor instanceof Hotel) {
             Hotel saved = hotelRepo.save(tobeSaved);
             return saved.getId().toString();
@@ -35,34 +34,9 @@ public class PlatformServices {
     // public List<PlatformVendorCommon> getAll() {
     // return pvcRepo.findAll();
     // }
-    // private String getGeolocation(Point location) throws JsonProcessingException
-    // {
-    // ObjectMapper mapper = new ObjectMapper();
-    // mapper.registerModule(new JtsModule());
-    // return mapper.writeValueAsString(location);
-    // }
-
-    // public List<AllPlatformVendors> getAllPaged() {
-    // Pageable pageable = PageRequest.of(0, 20);
-    // Page<PlatformVendorProjection> pageOfPlatformVendor =
-    // pvcRepo.findAllBroadly(pageable);
-    // List<PlatformVendorProjection> queryResult =
-    // pageOfPlatformVendor.getContent();
-    // List<AllPlatformVendors> result = new LinkedList<>();
-    // log.debug("result: {}", queryResult.get(0));
-    // queryResult.stream().forEach(qr -> {
-    // result
-    // .add(new AllPlatformVendors("", qr.getPlaceName(),
-    // Category.getByValue(qr.getCategory()),
-    // qr.getSubCategory(), qr.getGeolocation(), qr.getStreetName(),
-    // qr.getTown(),
-    // qr.getState(), qr.getCountry()));
-    // });
-    // return result;
-    // }
-
-    public List<PlatformVendorReprs> getAllNonPaged() {
-        List<PlatformVendorProjection> model = pvcRepo.findAllNonPaged();
+    public List<PlatformVendorReprs> getAllPaged(Integer pageNumber) {
+        Integer offSet = (pageNumber - 1) * 20 + 1;
+        List<PlatformVendorProjection> model = pvcRepo.findAllPaged(offSet);
         return model.stream().map(m -> new PlatformVendorReprs(m.getId(), m.getPlacename(), m.getCategory(),
                 m.getSubcategory(), m.getGeolocation(), m.getStreetname(), m.getTown(), m.getState(), m.getCountry()))
                 .toList();
