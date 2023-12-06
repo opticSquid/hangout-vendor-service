@@ -24,4 +24,6 @@ public interface PlatformVendorProjection {
 
     String getCountry();
 
+    // only used when finding nearby pvs
+    Double getDistance();
 }
