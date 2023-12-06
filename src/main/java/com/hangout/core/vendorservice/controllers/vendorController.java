@@ -2,8 +2,6 @@ package com.hangout.core.vendorservice.controllers;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hangout.core.vendorservice.dtos.PlatformVendorReprs;
 import com.hangout.core.vendorservice.entities.PlatformVendorCommon;
-import com.hangout.core.vendorservice.entities.food.Hotel;
 import com.hangout.core.vendorservice.services.PlatformServices;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController

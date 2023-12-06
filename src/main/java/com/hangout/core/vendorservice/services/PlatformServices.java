@@ -42,7 +42,7 @@ public class PlatformServices {
                 m.getSubcategory(), m.getGeolocation(), m.getStreetname(), m.getTown(), m.getState(), m.getCountry()))
                 .toList();
     }
-    // ! keeping this for future reference if required
+    // ! keeping this for future reference
     // public Boolean pushBatchInsert() {
     // List<Hotel> sampleHotels = IntStream.range(0, 100).parallel().mapToObj(i ->
     // createHotel(i))
@@ -74,8 +74,8 @@ public class PlatformServices {
     // }
 
     // public Point<G2D> generateRandomGeoLocation() {
-    // // Generate random values for lon (0 to 180) and lat (-90 to 90)
-    // double lon = Math.random() * 180;
+    // // Generate random values for lon (-180 to 180) and lat (-90 to 90)
+    // double lon = Math.random() * 359 -180;
     // double lat = Math.random() * 180 - 90;
     // // Create and return a GeoLocation object using the constructor
     // return new Point<G2D>(g(lon, lat), WGS84);
