@@ -33,12 +33,12 @@ public class vendorController {
         return pvServices.getAllPaged(pageNumber);
     }
 
-    @GetMapping("/batch")
-    public ResponseEntity<String> batchInsert() {
-        if (pvServices.pushBatchInsert()) {
-            return new ResponseEntity<String>("batch insert done", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>("error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    // @GetMapping("/batch")
+    // public ResponseEntity<String> batchInsert() {
+    // if (pvServices.pushBatchInsert()) {
+    // return new ResponseEntity<String>("batch insert done", HttpStatus.OK);
+    // } else {
+    // return new ResponseEntity<String>("error", HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
+    // }
 }

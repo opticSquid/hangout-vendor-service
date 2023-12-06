@@ -1,21 +1,14 @@
 package com.hangout.core.vendorservice.services;
 
-import static org.geolatte.geom.builder.DSL.g;
-import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
+// import static org.geolatte.geom.builder.DSL.g;
+// import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import org.geolatte.geom.G2D;
-import org.geolatte.geom.Point;
 import org.springframework.stereotype.Service;
 
 import com.hangout.core.vendorservice.dtos.PlatformVendorProjection;
 import com.hangout.core.vendorservice.dtos.PlatformVendorReprs;
-import com.hangout.core.vendorservice.entities.Address;
-import com.hangout.core.vendorservice.entities.Category;
 import com.hangout.core.vendorservice.entities.PlatformVendorCommon;
 import com.hangout.core.vendorservice.entities.food.Hotel;
 import com.hangout.core.vendorservice.repositories.HotelRepo;
@@ -51,51 +44,52 @@ public class PlatformServices {
     }
 
     // ! keeping this for future reference
-    public Boolean pushBatchInsert() {
-        List<Hotel> sampleHotels = IntStream.range(1, 50001).parallel().mapToObj(i -> createHotel(i))
-                .collect(Collectors.toList());
-        Integer batchSize = 1000;
-        try {
-            IntStream.range(0, sampleHotels.size() / batchSize + 1)
-                    .parallel()
-                    .forEach(i -> {
-                        int startIdx = i * batchSize;
-                        int endIdx = Math.min((i + 1) * batchSize, sampleHotels.size());
-                        List<Hotel> batch = sampleHotels.subList(startIdx, endIdx);
-                        if (!batch.isEmpty()) {
-                            hotelRepo.saveAll(batch);
-                        }
-                    });
+    // public Boolean pushBatchInsert() {
+    // List<Hotel> sampleHotels = IntStream.range(1, 50001).parallel().mapToObj(i ->
+    // createHotel(i))
+    // .collect(Collectors.toList());
+    // Integer batchSize = 1000;
+    // try {
+    // IntStream.range(0, sampleHotels.size() / batchSize + 1)
+    // .parallel()
+    // .forEach(i -> {
+    // int startIdx = i * batchSize;
+    // int endIdx = Math.min((i + 1) * batchSize, sampleHotels.size());
+    // List<Hotel> batch = sampleHotels.subList(startIdx, endIdx);
+    // if (!batch.isEmpty()) {
+    // hotelRepo.saveAll(batch);
+    // }
+    // });
 
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
-    }
+    // return true;
+    // } catch (Exception ex) {
+    // return false;
+    // }
+    // }
 
-    private Hotel createHotel(int i) {
-        Hotel hotel = new Hotel();
-        hotel.setIsVegFoodAvailable(true);
-        hotel.setPlacename("hotel" + i);
-        hotel.setCategory(Category.FOOD);
-        hotel.setSubcategory("hotel");
-        hotel.setOwnerid(UUID.randomUUID());
-        Address address = new Address();
-        address.setGeolocation(generateRandomGeoLocation());
-        address.setBuildingnameornumber("building" + i);
-        address.setStreetname("street" + i);
-        address.setTown("town" + i);
-        address.setState("state" + i);
-        address.setCountry("country" + i);
-        hotel.setAddress(address);
-        return hotel;
-    }
+    // private Hotel createHotel(int i) {
+    // Hotel hotel = new Hotel();
+    // hotel.setIsVegFoodAvailable(true);
+    // hotel.setPlacename("hotel" + i);
+    // hotel.setCategory(Category.FOOD);
+    // hotel.setSubcategory("hotel");
+    // hotel.setOwnerid(UUID.randomUUID());
+    // Address address = new Address();
+    // address.setGeolocation(generateRandomGeoLocation());
+    // address.setBuildingnameornumber("building" + i);
+    // address.setStreetname("street" + i);
+    // address.setTown("town" + i);
+    // address.setState("state" + i);
+    // address.setCountry("country" + i);
+    // hotel.setAddress(address);
+    // return hotel;
+    // }
 
-    public Point<G2D> generateRandomGeoLocation() {
-        // Generate random values for lon (-180 to 180) and lat (-90 to 90)
-        double lon = Math.random() * 359 - 180;
-        double lat = Math.random() * 180 - 90;
-        // Create and return a GeoLocation object using the constructor
-        return new Point<G2D>(g(lon, lat), WGS84);
-    }
+    // public Point<G2D> generateRandomGeoLocation() {
+    // // Generate random values for lon (-180 to 180) and lat (-90 to 90)
+    // double lon = Math.random() * 359 - 180;
+    // double lat = Math.random() * 180 - 90;
+    // // Create and return a GeoLocation object using the constructor
+    // return new Point<G2D>(g(lon, lat), WGS84);
+    // }
 }
