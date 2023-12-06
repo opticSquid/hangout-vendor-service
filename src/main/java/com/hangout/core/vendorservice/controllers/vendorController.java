@@ -2,6 +2,8 @@ package com.hangout.core.vendorservice.controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,12 +33,12 @@ public class vendorController {
         return pvServices.getAllPaged(pageNumber);
     }
 
-    // @GetMapping("/batch")
-    // public ResponseEntity<String> batchInsert() {
-    // if (pvServices.pushBatchInsert()) {
-    // return new ResponseEntity<String>("batch insert done", HttpStatus.OK);
-    // } else {
-    // return new ResponseEntity<String>("error", HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
+    @GetMapping("/batch")
+    public ResponseEntity<String> batchInsert() {
+        if (pvServices.pushBatchInsert()) {
+            return new ResponseEntity<String>("batch insert done", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

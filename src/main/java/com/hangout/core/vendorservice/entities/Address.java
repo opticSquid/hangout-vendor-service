@@ -5,7 +5,9 @@ import org.geolatte.geom.Point;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,8 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Address {
     @Id
-    @GeneratedValue
-    private Integer addressId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
+    @SequenceGenerator(name = "seqGen", sequenceName = "seq", initialValue = 1)
+    private Long addressId;
     private Point<G2D> geolocation;
     private String buildingnameornumber;
     private String streetname;
