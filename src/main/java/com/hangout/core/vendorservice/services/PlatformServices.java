@@ -7,8 +7,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.hangout.core.vendorservice.dtos.FindPvNearbyProjection;
+import com.hangout.core.vendorservice.dtos.FindPvNearbyRepresentation;
+import com.hangout.core.vendorservice.dtos.FindPvNearbyRequestBody;
 import com.hangout.core.vendorservice.dtos.PlatformVendorProjection;
-import com.hangout.core.vendorservice.dtos.PlatformVendorReprs;
+import com.hangout.core.vendorservice.dtos.PlatformVendorRepresentation;
 import com.hangout.core.vendorservice.entities.PlatformVendorCommon;
 import com.hangout.core.vendorservice.entities.food.Hotel;
 import com.hangout.core.vendorservice.repositories.HotelRepo;
@@ -22,27 +25,45 @@ public class PlatformServices {
     private final PlatformVendorCommonRepo pvcRepo;
     private final HotelRepo hotelRepo;
 
-    public String addVendor(PlatformVendorCommon vendor) {
-        Hotel tobeSaved = (Hotel) vendor;
+    public String addVendor(final PlatformVendorCommon vendor) {
+        final Hotel tobeSaved = (Hotel) vendor;
         if (vendor instanceof Hotel) {
-            Hotel saved = hotelRepo.save(tobeSaved);
+            final Hotel saved = hotelRepo.save(tobeSaved);
             return saved.getId().toString();
         } else {
             return null;
         }
     }
 
-    public List<PlatformVendorReprs> getAllPaged(Integer pageNumber) {
-        // If the incoming value of pageNumber is less than or equal to 0, then it is
-        // considered as page 1
-        pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-        Integer offSet = (pageNumber - 1) * 20 + 1;
-        List<PlatformVendorProjection> model = pvcRepo.findAllPaged(offSet);
-        return model.stream().map(m -> new PlatformVendorReprs(m.getId(), m.getPlacename(), m.getCategory(),
+    public List<PlatformVendorRepresentation> getAllPaged(final Integer pageNumber) {
+        final Integer offSet = getOffSet(pageNumber);
+        final List<PlatformVendorProjection> model = pvcRepo.findAllPaged(offSet);
+        return model.stream().map(m -> new PlatformVendorRepresentation(m.getId(), m.getPlacename(), m.getCategory(),
                 m.getSubcategory(), m.getGeolocation(), m.getStreetname(), m.getTown(), m.getState(), m.getCountry()))
                 .toList();
     }
 
+    public List<FindPvNearbyRepresentation> getAllNearby(final FindPvNearbyRequestBody searchDetails,
+            final Integer pageNumber) {
+        final Integer offset = getOffSet(pageNumber);
+        final String locationWKT = "'POINT(" + searchDetails.userLocation().getPosition().getLon() + " "
+                + searchDetails.userLocation().getPosition().getLat() + ")'";
+        final List<FindPvNearbyProjection> model = pvcRepo.findAllNearby(
+                searchDetails.userLocation().getPosition().getLon(),
+                searchDetails.userLocation().getPosition().getLat(), searchDetails.searchRadius(), offset);
+        return model.stream().map(m -> new FindPvNearbyRepresentation(m.getId(), m.getPlacename(), m.getCategory(),
+                m.getSubcategory(), m.getGeolocation(), m.getStreetname(), m.getTown(), m.getState(), m.getCountry(),
+                m.getDistance()))
+                .toList();
+    }
+
+    private Integer getOffSet(Integer pageNumber) {
+        // If the incoming value of pageNumber is less than or equal to 0, then it is
+        // considered as page 1
+        pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+        final Integer offSet = (pageNumber - 1) * 20 + 1;
+        return offSet;
+    }
     // ! keeping this for future reference
     // public Boolean pushBatchInsert() {
     // List<Hotel> sampleHotels = IntStream.range(1, 50001).parallel().mapToObj(i ->
@@ -60,7 +81,6 @@ public class PlatformServices {
     // hotelRepo.saveAll(batch);
     // }
     // });
-
     // return true;
     // } catch (Exception ex) {
     // return false;

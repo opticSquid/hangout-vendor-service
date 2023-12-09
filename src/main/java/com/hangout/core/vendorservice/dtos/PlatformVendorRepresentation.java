@@ -11,7 +11,7 @@ import com.hangout.core.vendorservice.entities.Category;
 import lombok.Getter;
 
 @Getter
-public class PlatformVendorReprs implements Serializable {
+public class PlatformVendorRepresentation implements Serializable {
     private UUID id;
     private String placeName;
     private Category category;
@@ -22,7 +22,7 @@ public class PlatformVendorReprs implements Serializable {
     private String state;
     private String country;
 
-    public PlatformVendorReprs(UUID id, String placeName, Integer category, String subCategory,
+    public PlatformVendorRepresentation(UUID id, String placeName, Integer category, String subCategory,
             Point<G2D> geolocation, String streetName,
             String town, String state, String country) {
         this.id = id;
