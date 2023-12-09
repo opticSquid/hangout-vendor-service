@@ -46,8 +46,6 @@ public class PlatformServices {
     public List<FindPvNearbyRepresentation> getAllNearby(final FindPvNearbyRequestBody searchDetails,
             final Integer pageNumber) {
         final Integer offset = getOffSet(pageNumber);
-        final String locationWKT = "'POINT(" + searchDetails.userLocation().getPosition().getLon() + " "
-                + searchDetails.userLocation().getPosition().getLat() + ")'";
         final List<FindPvNearbyProjection> model = pvcRepo.findAllNearby(
                 searchDetails.userLocation().getPosition().getLon(),
                 searchDetails.userLocation().getPosition().getLat(), searchDetails.searchRadius(), offset);
