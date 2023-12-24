@@ -15,6 +15,8 @@ import com.hangout.core.vendorservice.dtos.PlatformVendorRepresentation;
 import com.hangout.core.vendorservice.entities.PlatformVendorCommon;
 import com.hangout.core.vendorservice.services.PlatformServices;
 
+import io.micrometer.observation.annotation.Observed;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,6 +30,8 @@ public class vendorController {
         return pvServices.addVendor(vendor);
     }
 
+    @Observed(name = "user.name", contextualName = "getAll Controller ==> getAllPaged Service", lowCardinalityKeyValues = {
+            "userType", "userType2" })
     @GetMapping
     public List<PlatformVendorRepresentation> getAll(@RequestParam Integer pageNumber) {
         return pvServices.getAllPaged(pageNumber);
