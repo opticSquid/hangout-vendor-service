@@ -7,3 +7,7 @@ eureka:
   instance:
     hostname: localhost
     instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}:${spring.application.instance_id:${random.value}}
+logging:
+  level:
+    web: debug
+    "[com.hangout.core]": trace
