@@ -5,6 +5,7 @@ package com.hangout.core.vendorservice.services;
 
 import java.util.List;
 
+import io.micrometer.observation.annotation.Observed;
 import org.springframework.stereotype.Service;
 
 import com.hangout.core.vendorservice.dtos.FindPvNearbyProjection;
@@ -34,7 +35,8 @@ public class PlatformServices {
             return null;
         }
     }
-
+    @Observed(name = "find pvs", contextualName = "getAllPaged Service ==> vendors DB", lowCardinalityKeyValues = {
+            "pageNumber", "1" })
     public List<PlatformVendorRepresentation> getAllPaged(final Integer pageNumber) {
         final Integer offSet = getOffSet(pageNumber);
         final List<PlatformVendorProjection> model = pvcRepo.findAllPaged(offSet);

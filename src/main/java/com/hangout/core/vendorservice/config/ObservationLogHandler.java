@@ -1,30 +1,26 @@
 package com.hangout.core.vendorservice.config;
 
-import java.util.stream.StreamSupport;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import io.micrometer.common.KeyValue;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationHandler;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.util.stream.StreamSupport;
 
 // Example of plugging in a custom handler that in this case will print a statement before and after all observations take place
 @Component
+@Slf4j
 public class ObservationLogHandler implements ObservationHandler<Observation.Context> {
-    private static final Logger log = LoggerFactory.getLogger(ObservationLogHandler.class);
 
     @Override
     public void onStart(Observation.Context context) {
-        log.info("Before running the observation for context [{}], userType [{}]", context.getName(),
-                getUserTypeFromContext(context));
+        log.info("Before running the observation for context [{}], pageNumber [{}]", context.getName(), getPageNumber(context));
     }
 
     @Override
     public void onStop(Observation.Context context) {
-        log.info("After running the observation for context [{}], userType [{}]", context.getName(),
-                getUserTypeFromContext(context));
+        log.info("After running the observation for context [{}], pageNumber [{}]", context.getName(), getPageNumber(context));
     }
 
     @Override
@@ -32,12 +28,8 @@ public class ObservationLogHandler implements ObservationHandler<Observation.Con
         return true;
     }
 
-    private String getUserTypeFromContext(Observation.Context context) {
-        return StreamSupport.stream(context.getLowCardinalityKeyValues().spliterator(), false)
-                .filter(keyValue -> "userType".equals(keyValue.getKey()))
-                .map(KeyValue::getValue)
-                .findFirst()
-                .orElse("UNKNOWN");
+    private String getPageNumber(Observation.Context context) {
+        return StreamSupport.stream(context.getLowCardinalityKeyValues().spliterator(), false).filter(keyValue -> "pageNumber".equals(keyValue.getKey())).map(KeyValue::getValue).findFirst().orElse("UNKNOWN");
     }
 
 }
