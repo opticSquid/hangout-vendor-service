@@ -30,8 +30,8 @@ public class vendorController {
         return pvServices.addVendor(vendor);
     }
 
-    @Observed(name = "user.name", contextualName = "getAll Controller ==> getAllPaged Service", lowCardinalityKeyValues = {
-            "userType", "userType2" })
+    @Observed(name = "find pvs", contextualName = "getAll Controller ==> getAllPaged Service", lowCardinalityKeyValues = {
+            "pageNumber", "1" })
     @GetMapping
     public List<PlatformVendorRepresentation> getAll(@RequestParam Integer pageNumber) {
         return pvServices.getAllPaged(pageNumber);

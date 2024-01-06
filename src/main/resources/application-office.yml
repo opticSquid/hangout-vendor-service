@@ -3,3 +3,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/vendors
     username: postgres
     password: password-123
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}:${spring.application.instance_id:${random.value}}
+logging:
+  level:
+    web: debug
+    "[com.hangout.core]": trace
