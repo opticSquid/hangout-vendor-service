@@ -15,12 +15,12 @@ public class ObservationLogHandler implements ObservationHandler<Observation.Con
 
     @Override
     public void onStart(Observation.Context context) {
-        log.info("Before running the observation for context [{}], pageNumber [{}]", context.getName(), getPageNumber(context));
+        log.debug("Before running the observation for context [{}], pageNumber [{}]", context.getName(), getPageNumber(context));
     }
 
     @Override
     public void onStop(Observation.Context context) {
-        log.info("After running the observation for context [{}], pageNumber [{}]", context.getName(), getPageNumber(context));
+        log.debug("After running the observation for context [{}], pageNumber [{}]", context.getName(), getPageNumber(context));
     }
 
     @Override

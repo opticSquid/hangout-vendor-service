@@ -40,7 +40,7 @@ management:
             requests: true
 logging:
   level:
-    web: debug
+    web: info
     "[com.hangout.core]": trace
   # traceID and spanId are predefined MDC keys - we want the logs to include them
   pattern:
