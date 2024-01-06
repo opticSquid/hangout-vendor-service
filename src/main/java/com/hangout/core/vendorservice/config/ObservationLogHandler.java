@@ -30,6 +30,5 @@ public class ObservationLogHandler implements ObservationHandler<Observation.Con
 
     private String getPageNumber(Observation.Context context) {
         return StreamSupport.stream(context.getLowCardinalityKeyValues().spliterator(), false).filter(keyValue -> "pageNumber".equals(keyValue.getKey())).map(KeyValue::getValue).findFirst().orElse("UNKNOWN");
-    }
 
 }
