@@ -40,7 +40,7 @@
 		</dependency>
 		<dependency>
 			<groupId>io.opentelemetry</groupId>
-			<artifactId>opentelemetry-exporter-zipkin</artifactId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.github.loki4j</groupId>
@@ -64,11 +64,6 @@
 			<artifactId>geolatte-geojson</artifactId>
 			<version>1.9.1</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.hibernate.orm</groupId>-->
-<!--			<artifactId>hibernate-spatial</artifactId>-->
-<!--			<version>6.2.13.Final</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -85,9 +80,13 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.github.ben-manes.caffeine</groupId>

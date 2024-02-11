@@ -1,7 +1,7 @@
 server:
   port: 0
-#  servlet:
-#    context-path: /vendors
+  servlet:
+    context-path: /vendors
 spring:
   application:
     name: vendor
@@ -19,13 +19,12 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
+#eureka:
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
 logging:
   level:
     web: info
